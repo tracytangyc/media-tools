@@ -11,4 +11,4 @@ hhmmss=$(printf "%02d:%02d:%02d\n" $h $m $s)
 
 echo target duration = $hhmmss
 
-ffmpeg -i $1 -ss $2 -t $hhmmss -acodec copy "crop $1"
+ffmpeg -i $1 -ss $2 -t $hhmmss -acodec copy -c copy "crop $1"
