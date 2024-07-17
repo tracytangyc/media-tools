@@ -1,35 +1,42 @@
 import tkinter as tk
 import ttkbootstrap as ttk
-import functions as f
+from ttkbootstrap.constants import *
+import subprocess
+import platform
+import re
 
-from components import concat as concat, convert as convert, extract as extract, join_audio_video as joinav, m3u8 as m3u8
+import functions as F
 
-root = tk.Tk()
+class App(tk.Tk):
+    name = "app"
+    display = "音视频处理小工具"
+    root = None
+    win = None
+    style = None
+    OS = ""
 
-root.title("音视频处理小工具  Media Tools")
-root.geometry("960x540")
+    # children:
+    nav = None
+    sep_v = None
+    main = None
 
-## UPPER HALF:
+    def __init__(self):
+        super().__init__()
+        self.title("音视频处理小工具  Media Tools")
+        self.geometry("960x540")
 
-label_welcome = ttk.Label(root, text="欢迎使用音视频处理小工具  Media Tools",)
-label_welcome.pack(pady=20)
+        # check the operating system
+        self.OS = platform.system()  # 'Linux', 'Darwin' (macOS), 'Java', 'Windows'
+        print(self.OS)
 
-# buttons to choose action
-btn_action_concat = ttk.Button(root, text="快速拼接")
-btn_action_concat.pack(pady=20)
-btn_action_extract = ttk.Button(root, text="快速截取")
-btn_action_extract.pack(pady=20)
-btn_action_join_audio_video = ttk.Button(root, text="合并音视频")
-btn_action_join_audio_video.pack(pady=20)
-btn_action_convert = ttk.Button(root, text="转换格式")
-btn_action_convert.pack(pady=20)
-btn_action_m3u8 = ttk.Button(root, text="下载m3u8网络资源")
-btn_action_m3u8.pack(pady=20)
+        import styles as S
+        self.style = ttk.Style()
+        self.style.configure("TButton", font=S.P, fill="both", expand=True)
+        self.style.configure("TLabel", font=S.P)
 
+        import ui, nav, main
+        self.nav = nav.Nav(self, self)
+        self.sep_v = ui.SepV(self, self)
+        self.main = main.Main(self, self)
+        self.mainloop()
 
-## LOWER HALF:
-
-frame = ttk.Frame(root)
-frame['padding'] = (20, 20)
-
-root.mainloop()
