@@ -10,7 +10,7 @@ def run_action(action_type,**kwargs):
     try:
         result = subprocess.run(cmd, shell=True, check=True, stdout=subprocess.PIPE, stderrr=subprocess.PIPE, text=True)
         print(result.stdout)
-    except:
+    except Exception as e:
         print("Error:", e.stderr)
 
 def re_hhmmss(input):
